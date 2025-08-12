@@ -17,14 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Compilando el proyecto
+      - name: Construir sitio (skip si no tienes build)
         run: echo "Construyendo el sitio web..."
 
   report-build-status:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Reportando estado del build
+      - name: Reportar estado del build
         run: echo "El build ha sido completado con éxito."
 
   deploy:
@@ -34,6 +34,9 @@ jobs:
       - name: Subir artefactos de la página
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: '.'   
       - name: Desplegar en GitHub Pages
         uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.MY_DEPLOY_TOKEN }}
+
